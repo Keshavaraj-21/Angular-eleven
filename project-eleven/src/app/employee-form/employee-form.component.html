@@ -1,0 +1,126 @@
+<div class="panel-heading">Employee form</div>
+<div class="panel-body">
+  <form [formGroup]="employeeFormGroup">
+    <div
+      class="form-group"
+      [class.has-error]="firstName.invalid && firstName.touched"
+    >
+      <label for="firstName">First Name:</label>
+      <input
+        id="firstName"
+        class="form-control"
+        formControlName="firstName"
+        placeholder="First name Required"
+        required
+      />
+      <div class="help-block text-danger" *ngIf="firstName.touched">
+        <span *ngIf="firstName.errors?.required">
+          First Name is required!!
+        </span>
+        <span *ngIf="firstName.errors?.minlength">
+          First Name must be minimum 3 chars!!!
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="lname">Last Name:</label>
+      <input id="lname" class="form-control" formControlName="lastName" />
+    </div>
+
+    <div
+      formGroupName="emailGroup"
+      [class.has-error]="emailGroup.invalid && emailGroup.touched"
+    >
+      <div class="form-group">
+        <label for="email"> EMAIL:</label>
+        <input
+          id="email"
+          class="form-control"
+          formControlName="email"
+          placeholder=" email(required)"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="confirmEmail"> Confirm EMAIL:</label>
+        <input
+          id="confirmEmail"
+          class="form-control"
+          formControlName="confirmEmail"
+          placeholder=" confirm Email(required)"
+        />
+      </div>
+      <div
+        class="help-block text-danger"
+        *ngIf="emailGroup.errors?.match && emailGroup.touched"
+      >
+        Email doesn't match!!!
+      </div>
+    </div>
+
+    <!-- <div *ngIf=emailGroup.errors?.[match]">
+            Email doesnt match
+        </div> -->
+    <div class="form-group">
+      <label for="Mobile"> Mobile:</label>
+      <input
+        id="mobile"
+        class="form-control"
+        formControlName="mobile"
+        placeholder="enter your mobile number"
+      />
+      <div class="help-block text-danger">
+        <span *ngIf="mobile.errors?.required">
+          mobile number is required.
+        </span>
+        <span *ngIf="mobile.invalid">
+          mobile number must between 8000000000 and 9900000000
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="notification"> Send notification:</label>
+      <input
+        id="notification"
+        type="radio"
+        formControlName="sendNotification"
+        value="email"
+        placeholder="email required"
+        (click)="doNotification('email')"
+      />
+      &nbsp; Email
+      <input
+        id="notification"
+        type="radio"
+        formControlName="sendNotification"
+        value="sms"
+        (click)="doNotification('sms')"
+      />
+      &nbsp;SMS
+    </div>
+
+    <div class="form-group" [class.has-error]="range.invalid && range.touched">
+      <label for="range">Range:</label>
+      <input id="range" class="form-control" formControlName="range" />
+      <div
+        class="help-block text-danger"
+        *ngIf="range.invalid && range.touched"
+      >
+        Range must between 10 and 20
+      </div>
+    </div>
+
+    <hr />
+    <button class="btn btn-primary" [disabled]="!employeeFormGroup.valid">
+      Submit
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="loadEmployee()">
+      Load Employee
+    </button>
+  </form>
+  <pre>Form status: {{ employeeFormGroup.status }}</pre>
+  <pre>fName:{{ firstName.value }}</pre>
+  <pre>Form value:{{ employeeFormGroup.value | json }}</pre>
+</div>
